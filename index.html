@@ -42,17 +42,38 @@
 	#decryption{
 		padding: 10px;
 	}
+
+	.intro-img{
+		display: inline-block;
+	}
+
+	.intro-img-wrap{
+		width: 100%;
+		text-align: center;
+	}
+
+	.intro-text-child{
+		padding-bottom: 15px;
+		padding-top: 15px;
+	}
+
+	.intro-text-child h4{
+		text-decoration: underline;
+	}
 </style>
 
 <div class="col-md-12 row">
-	<div class="col-md-4 col-md-offset-4 title">
+	<div class="col-md-4 col-md-offset-4 title"> 
 		<h3> Ceaser Cipher </h3>
 	</div>
 </div>
 <div class="container page-wrap">
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		<li class="nav-item active">
-			<a class="nav-link active" id="encryption-tab" data-toggle="tab" href="#encryption" role="tab" aria-controls="encryption" aria-selected="true">Encrypt</a>
+			<a class="nav-link active" id="faq-tab" data-toggle="tab" href="#faq" role="tab" aria-controls="faq" aria-selected="false">How It Works & FAQ </a>
+		</li>		
+		<li class="nav-item">
+			<a class="nav-link" id="encryption-tab" data-toggle="tab" href="#encryption" role="tab" aria-controls="encryption" aria-selected="true">Encrypt</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" id="decryption-tab" data-toggle="tab" href="#decryption" role="tab" aria-controls="decryption" aria-selected="false">Decrypt</a>
@@ -60,7 +81,7 @@
 	</ul>
 
 	<div class="tab-content" id="myTabContent">
-		<div class="tab-pane fade in active" id="encryption" role="tabpanel" aria-labelledby="encryption-tab">
+		<div class="tab-pane fade" id="encryption" role="tabpanel" aria-labelledby="encryption-tab">
 			<form id="encryption">
 				<div class="letter-shift-wrap col-md-12">
 					<div class="label-wrap">
@@ -116,6 +137,50 @@
 				</div>
 			</div>					
 		</div>
+
+		<div class="tab-pane fade in active" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+			<div class="container">
+				<div class="col-md-12 row">
+					<div class="intro-text">
+						<h3> What is a Ceaser Cipher ?</h3>
+
+						<p>
+							In cryptography, a Caesar cipher, also known as Caesar's cipher, the shift cipher, Caesar's code or Caesar shift, is one of the simplest and most widely known encryption techniques. It is a type of substitution cipher in which each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, <b>D</b> would be replaced by <b>A</b>, <b>E</b> would become <b>B</b>, and so on. The method is named after Julius Caesar, who used it in his private correspondence. 
+
+							<br> <br> -taken from <a href="https://en.wikipedia.org/wiki/Caesar_cipher"> Wikipedia page on Ceaser Cipher </a>
+						</p>
+
+						<div class="intro-img-wrap">
+							<img src="ceasercipher-img.jpg" class="intro-img">
+						</div>
+					</div>
+
+					<div class="intro-text">
+						<h3> Why build a Ceaser Cipher?</h3>
+
+						<p>
+							I know that there are many websites out there that are similar or better. This is a short personal project to test and challenge myself as a Web Developer and also build up my portfolio. I am planning to do more of these kind of projects.  
+						</p>
+					</div>	
+
+					<div class="intro-text">
+						<h3> How does it work? </h3>
+
+						<div class="intro-text-child">
+							<h4> Encryption </h4>
+
+							<p> Put in the number of letters you want to shift forward, as described above, a shift of 3 will result in a ciphertext starting on d, a shift of 5 will result in a ciphertext starting on e and so forth. Type the message you want to encrypt in the textbox below "your text" and click submit, the encrypted text will show below, labeled as encrypted text </p>
+						</div>
+
+						<div class="intro-text-child">
+							<h4> Decryption </h4>
+
+							<p> The letter shift system works the same as the encryption's. However to decipher the encrypted text you have to use the same letter shift that it was encoded with. Again, place the encrypted message in the textbox below "your text" and click submit, the decrypted text will show below, labeled as decrypted text </p>
+						</div>			
+					</div>	
+				</div>
+			</div>
+		</div>		
 	</div>
 </div>
 
