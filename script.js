@@ -28,7 +28,7 @@ function checkErrors(method){
 	var mustBeNumber = "<p class='error-message'> This input must be a number! </p>"
 	var outOfRange = "<p class='error-message'> This number must be between 1 - " + rangeLength + "</p>"
 
-	var letterShiftInput = parseInt( $('.letter-shift-wrap .cipher-input').val() ); 
+	var letterShiftInput = $( method +' .letter-shift-wrap .cipher-input').val(); 
 	if (isNaN(letterShiftInput)) { // check if letter shift is a int
 		$(method + ' .letter-shift-wrap .label-wrap').append(mustBeNumber)
 	}else if ( letterShiftInput > rangeLength){ // check in letter shift is within range
