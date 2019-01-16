@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+</head>
+<body>
+	<style type="text/css">
+		.type-wrap{
+			border: 1px solid black;
+			padding: 10px;
+		}
+
+		.title-wrap{
+			text-align: center;
+			padding: 15px;
+		}
+
+		.strong-against,
+		.weak-against{
+			padding: 10px;
+		}
+
+		.type-select-form{
+			width: 100%;
+			height: 40px;
+		}
+
+		.result-title-wrap{
+			text-align: center;
+			color: white;
+			padding: 10px;
+			position: relative;
+		}
+
+		.result-title-wrap.strong{
+			background-color: #cc3300;
+		}		
+
+		.result-title-wrap.weak{
+			background-color: #009933; 
+		}
+
+		.result-title{
+			margin-bottom: 0px;
+			font-size: 20px;
+			font-weight: 600;
+		}
+
+		.title{
+			font-size: 20px;
+			font-weight: 600;
+			margin-bottom: 0px;
+		}
+
+		option.hidden{
+			display: none;
+		}
+
+		.results-wrap{
+			padding-bottom: 20px;
+		}
+
+		.arrow-indicator{
+			width: 20px;
+			position: absolute;
+			right: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			transition: all 1s;			
+		}
+
+	</style>
+
+	<div class="col-sm-12 input-form">
+		<div class="col-sm-12 title-wrap">
+			<p class="title"> search type </p>
+		</div>
+
+		<div class="col-sm-4 type1-wrap">	
+			<select id="pokeType-select" class="type-select-form">
+				<option value="none"> Select Type </option>
+			</select>
+		</div>
+
+		<div class="col-sm-4 type2-wrap">
+			<select id="pokeType2-select" class="type-select-form">
+				<option value="none"> Select Type </option>
+			</select>
+		</div>
+
+		<div class="col-sm-4">
+			<button id="check-type" class="type-select-form"> Check </button>
+		</div>
+
+		<div class="errors">
+		</div>
+	</div>
+
+
+	<div class="col-sm-12 results-wrap">
+		<div class="col-sm-6">
+			<div class="strong-against">
+				<div class="col-sm-12 result-title-wrap strong">
+					<p class="result-title"> Strong Against <img src="down-arrow-white.svg" class="arrow-indicator"></p>
+				</div>
+				<div class="results">
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-6">	
+			<div class="weak-against">
+				<div class="col-sm-12 result-title-wrap weak">
+					<p class="result-title"> Weak Against <img src="down-arrow-white.svg" class="arrow-indicator"></p>
+				</div>
+				<div class="results">
+					
+				</div>
+			</div>	
+		</div>		
+	</div>
+
+
+
+
+	<script type="text/javascript" src="pogo_script.js"></script>
+	<script type="text/javascript">
+		appendOptions('#pokeType-select');
+		appendOptions('#pokeType2-select');
+
+		$('#pokeType-select').change(function(){
+			var type1Val = $(this).val()
+			$('#pokeType2-select option').each(function(){
+				$(this).removeClass('hidden')
+				if ($(this).val() == type1Val) {
+					$(this).addClass('hidden')
+				}
+			})
+		})
+
+		$('#pokeType2-select').change(function(){
+			var type2Val = $(this).val()
+			$('#pokeType-select option').each(function(){
+				$(this).removeClass('hidden')
+				if ($(this).val() == type2Val) {
+					$(this).addClass('hidden')
+				}
+			})
+		})		
+
+		$('#check-type').click(function(){
+
+			$('.strong-against .results').empty();
+			$('.weak-against .results').empty();
+
+			type1 = $('#pokeType-select').val();
+			type2 = $('#pokeType2-select').val();
+
+			var result = searchType(type1, type2);
+
+			console.log(result)
+			for (var i = 0; i < result.strongAgainst.length; i++) {
+				var type = result.strongAgainst[i].type
+				var status = result.strongAgainst[i].status
+				var multiplier = result.strongAgainst[i].multiplier
+
+				constructTypeOutput(type, status, multiplier)
+				$('.strong-against .results').append(constructTypeOutput(type, status, multiplier))
+			}
+
+			for (var i = 0; i < result.weakAgainst.length; i++) {
+
+				var type = result.weakAgainst[i].type
+				var status = result.weakAgainst[i].status
+				var multiplier = result.weakAgainst[i].multiplier
+
+				constructTypeOutput(type, status, multiplier)
+
+				$('.weak-against .results').append(constructTypeOutput(type, status, multiplier))
+			}
+
+			$('.strong').addClass('active')
+
+			$('.weak').addClass('active')
+
+			titleClickFunctions();
+		})
+
+		function titleClickFunctions(){
+			$('.strong').click(function(){
+				if ($(this).hasClass('active')) {	
+					$(this).removeClass('active')
+					$(this).siblings('.results').slideUp();
+				}else{
+					$(this).addClass('active')
+					$(this).siblings('.results').slideDown();				
+				}
+			})
+
+			$('.weak').click(function(){
+				if ($(this).hasClass('active')) {	
+					$(this).removeClass('active')
+					$(this).siblings('.results').slideUp();
+				}else{
+					$(this).addClass('active')
+					$(this).siblings('.results').slideDown();				
+				}
+			})
+		}
+
+		function constructTypeOutput(type, status, multiplier){
+			var resultType = "<p> type : " + type + "</p>"
+			var resultStatus = "<p> status : " + status + "</p>"
+			var resultMultiplier = "<p> multiplier : " + multiplier + "</p>"
+
+			var wrap = "<div class='type-wrap col-sm-12'>" + resultType + resultStatus + resultMultiplier + "</div>"
+
+			return wrap;
+		}
+	</script>
+</body>
+</html>
