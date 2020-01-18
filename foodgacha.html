@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+	<style type="text/css">
+		body{
+			height: 100vh;
+			background-color : #eee;
+			margin: 0;
+		}
+
+		.owl-carousel{
+			max-width: 500px;
+			width: 100%;
+			margin-top: 10px;
+			border-radius: 10px;
+
+/*			-webkit-box-shadow: inset 2px 7px 5px 0px rgba(0,0,0,0.5);
+			-moz-box-shadow: inset 2px 7px 5px 0px rgba(0,0,0,0.5);
+			box-shadow: inset 2px 7px 5px 0px rgba(0,0,0,0.5);*/
+
+			/*-webkit-box-shadow: 2px 7px 5px 0px rgba(0,0,0,0.5);
+			-moz-box-shadow: 2px 7px 5px 0px rgba(0,0,0,0.5);
+			box-shadow: 2px 7px 5px 0px rgba(0,0,0,0.5);*/
+		}
+
+		.owl-carousel .items{
+			background-color: #3399ff;
+			padding: 20px;
+			border-radius: 10px;
+			text-align: center;
+			font-size: 50px;
+			color: #fff;
+		}
+
+		@media(max-width: 320px){
+			.owl-carousel .items{
+				font-size: 20px;
+			}			
+		}
+
+		.row{
+			padding: 0 20px;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+		}
+
+		.space-top{
+			margin-top: 20px;
+		}
+
+		.play{
+			background-color: #ff9933;
+			border: 2px solid #ff9933;
+			border-radius: 10px;
+			padding: 20px 15px;
+			color: #fff;
+			font-size: 22px;
+			cursor: pointer;
+		}
+
+		.play:hover{
+			-webkit-box-shadow: 2px 7px 5px 0px rgba(0,0,0,0.2);
+			-moz-box-shadow: 2px 7px 5px 0px rgba(0,0,0,0.2);
+			box-shadow: 2px 7px 5px 0px rgba(0,0,0,0.2);			
+		}
+
+		.page-wrap{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			flex: 1;
+			height: 100%;
+		}
+	</style>
+	
+
+	<div class="page-wrap">
+		<div class="row">
+			<h1> Food Gacha </h1>
+		</div>
+		<div class="row">
+			<div class="owl-carousel owl-theme">
+			</div>
+		</div>
+
+		<div class="row space-top">
+			<button class="play"> Gacha spin! </button>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			function shuffle(array) {
+			  var currentIndex = array.length, temporaryValue, randomIndex;
+
+			  // While there remain elements to shuffle...
+				while (0 !== currentIndex) {
+
+				    // Pick a remaining element...
+				    randomIndex = Math.floor(Math.random() * currentIndex);
+				    currentIndex -= 1;
+
+				    // And swap it with the current element.
+				    temporaryValue = array[currentIndex];
+				    array[currentIndex] = array[randomIndex];
+				    array[randomIndex] = temporaryValue;
+				}
+
+			  return array;
+			}
+
+			var foodArr = [
+				"pizza",
+				"sushi",
+				"hotdog",
+				"thai food",
+				"hotpot",
+				"korean bbq",
+				"instant noodle",
+				"taco",
+				"buritto",
+				"stir fry noodles",
+				"fried chicken",
+				"briyani",
+				"sandwich",
+				"ice cream",
+				"speggethi/pasta",
+				"cake",
+				"donut",
+				"chocolate",
+				"roast chicken",
+				"dumplings",
+				"burger",
+				"nuggets",
+				"chicken chop",
+				"steak",
+				"salad",
+				"rice bowls",
+				"crepes",
+				"soup",
+				"try again"
+			]
+
+			var shuffledArr = shuffle(foodArr)
+			// console.log(shuffledArr)
+
+			for (var i = shuffledArr.length - 1; i >= 0; i--) {
+				$('.owl-carousel').append("<div class='items'> <p>" + shuffledArr[i] + " </p> <div>")
+			}
+
+			var owl = $('.owl-carousel');
+
+			owl.owlCarousel({
+			    loop:true,
+			    margin:10,
+			    nav:false,
+			    dots: false,
+			    mouseDrag: false,
+			    touchDrag: false,
+				// autoplay:true,
+			 //    autoplayTimeout:10,
+			 //    autoplayHoverPause:true,
+			    responsive:{
+			        0:{
+			            items:1
+			        },
+			        600:{
+			            items:1
+			        },
+			        1000:{
+			            items:1
+			        }
+			    }
+			})
+
+			$('.play').on('click',function(){
+			    owl.trigger('play.owl.autoplay',[10])
+
+			    setTimeout(function(){
+				    owl.trigger('stop.owl.autoplay')
+			    }, 1000)
+			})	
+		})
+
+	</script>
+</body>
+</html>
